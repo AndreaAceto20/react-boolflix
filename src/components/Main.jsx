@@ -35,20 +35,9 @@ export default function Main() {
     useEffect(fetchMovies, [])
     return (
         <>
-            {/* <main>
-                <div className='container'>
-                    {
-                        movies.map((movie) => (
+            <main>
 
-                            <div className='card' key={movie.id}>
-                                <h2>{movie.title}</h2>
-                                <img src={movies.poster_path} alt={movie.title} />
-                            </div>
-
-                        ))
-                    }
-                </div>
-            </main > */}
+            </main >
         </>
     )
 }

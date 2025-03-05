@@ -1,6 +1,8 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
 
+
+
 const initialFormData = {
     title: "",
     language: "it-IT"
@@ -10,6 +12,7 @@ export default function Header() {
     const [movies, setMovies] = useState([])
     const [search, setSearch] = useState(initialFormData)
     const [tv, setTv] = useState([])
+    const url_base = 'https://image.tmdb.org/t/p/w342/'
     function fetchMovies() {
         const options = {
             method: 'GET',
@@ -25,7 +28,7 @@ export default function Header() {
             .request(options)
             .then((res) => {
                 setMovies(res.data.results)
-                // console.log(res.data)
+                // console.log(res.data.results.title)
             })
             .catch(err => console.error(err));
     }
@@ -85,10 +88,12 @@ export default function Header() {
                 movies.map((movie) => (
 
                     <div className='card' key={movie.id}>
+                        <img src={url_base + movie.poster_path} alt="" />
                         <h2>{movie.title}</h2>
                         <p>{movie.original_title}</p>
                         <p>{search.language}</p>
-                        <p>{movie.vote_avarage}</p>
+                        <p>{Math.ceil(Math.ceil(movie.vote_average) / 2)}</p>
+                        {/* <FontAwesomeIcon icon={faStar} /> */}
                     </div>
 
                 ))
@@ -98,10 +103,11 @@ export default function Header() {
                 tv.map((serie) => (
 
                     <div className='card' key={serie.id}>
+                        <img src={url_base + serie.poster_path} alt={serie.title} />
                         <h2>{serie.name}</h2>
                         <p>{serie.original_name}</p>
                         <p>{search.language}</p>
-                        <p>{serie.vote_avarage}</p>
+                        <p>{Math.ceil(Math.ceil(serie.vote_average) / 2)}</p>
                     </div>
 
                 ))
