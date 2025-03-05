@@ -1,14 +1,16 @@
 import axios from "axios";
 import { useState, useEffect } from "react";
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import Card from "./Card";
+import CardSerie from "./CardSerie";
 
 
 
 const initialFormData = {
     title: "",
-    language: "it-IT"
 }
 
-export default function Header() {
+export default function Page() {
     const [movies, setMovies] = useState([])
     const [search, setSearch] = useState(initialFormData)
     const [tv, setTv] = useState([])
@@ -17,7 +19,7 @@ export default function Header() {
         const options = {
             method: 'GET',
             url: 'https://api.themoviedb.org/3/search/movie',
-            params: { query: search.title, include_adult: 'false', language: search.language, page: '1' },
+            params: { query: search.title, include_adult: 'false', language: "en-US", page: '1' },
             headers: {
                 accept: 'application/json',
                 Authorization: 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1MWNiMDg3N2I3ODljMDY5YjkyNGZiZjI1Zjc5NjZiMCIsIm5iZiI6MTc0MTE4NzU5MC40NTksInN1YiI6IjY3Yzg2YTA2ODMwNTcwZDFmZGMyYWFhZiIsInNjb3BlcyI6WyJhcGlfcmVhZCJdLCJ2ZXJzaW9uIjoxfQ.oaOQXMwIREsypj2NngV5Q0J7Ggfp_BbkbM0zhrqQfAY'
@@ -71,6 +73,7 @@ export default function Header() {
     return (
         <>
             <header>
+                <h1>Boolflix</h1>
                 <nav>
                     <form onSubmit={search_movie}>
                         <input
@@ -83,35 +86,23 @@ export default function Header() {
                     </form>
                 </nav>
             </header>
-            <h1>film</h1>
-            {
-                movies.map((movie) => (
+            <main className="container">
+                {
+                    movies.map((movie) => (
 
-                    <div className='card' key={movie.id}>
-                        <img src={url_base + movie.poster_path} alt="" />
-                        <h2>{movie.title}</h2>
-                        <p>{movie.original_title}</p>
-                        <p>{search.language}</p>
-                        <p>{Math.ceil(Math.ceil(movie.vote_average) / 2)}</p>
-                        {/* <FontAwesomeIcon icon={faStar} /> */}
-                    </div>
+                        <Card url={url_base} props={movie}></Card>
 
-                ))
-            }
-            <h1>serie tv</h1>
-            {
-                tv.map((serie) => (
+                    ))
+                }
+                <h2>serie tv</h2>
+                {
+                    tv.map((serie) => (
 
-                    <div className='card' key={serie.id}>
-                        <img src={url_base + serie.poster_path} alt={serie.title} />
-                        <h2>{serie.name}</h2>
-                        <p>{serie.original_name}</p>
-                        <p>{search.language}</p>
-                        <p>{Math.ceil(Math.ceil(serie.vote_average) / 2)}</p>
-                    </div>
+                        <CardSerie url={url_base} props={serie}></CardSerie>
 
-                ))
-            }
+                    ))
+                }
+            </main>
         </>
     )
 }
