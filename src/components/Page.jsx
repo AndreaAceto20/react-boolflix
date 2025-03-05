@@ -94,7 +94,6 @@ export default function Page() {
 
                     ))
                 }
-                <h2>serie tv</h2>
                 {
                     tv.map((serie) => (
 
